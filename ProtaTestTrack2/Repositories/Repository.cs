@@ -16,54 +16,16 @@ namespace ProtaTestTrack2.Repository
             return await _collection.Find(Builders<T>.Filter.Empty).ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
-        {
-            return await FindByIdRecursiveAsync(id);
-        }
-
-        public async Task<T> FindByIdRecursiveAsync(Guid id)
+        public async Task<T> GetByIdAsync(string id)
         {
             var filter = Builders<T>.Filter.Or(
                 Builders<T>.Filter.Eq("RootID", id),
                 Builders<T>.Filter.Eq("FeatureID", id),
                 Builders<T>.Filter.Eq("CaseID", id)
             );
-
-            var entity = await _collection.Find(filter).FirstOrDefaultAsync();
-            if (entity != null)
-            {
-                return entity;
-            }
-
-            var allEntities = await _collection.Find(Builders<T>.Filter.Empty).ToListAsync();
-            foreach (var parentEntity in allEntities)
-            {
-                var childFeatures = GetChildFeatures(parentEntity);
-                if (childFeatures != null)
-                {
-                    foreach (var childFeature in childFeatures)
-                    {
-                        if (GetEntityId(childFeature) == id)
-                        {
-                            return childFeature;
-                        }
-                    }
-                }
-            }
-
-            return null;
+            var result = await _collection.FindAsync<T>(filter);
+            return await result.FirstOrDefaultAsync();
         }
-
-        private List<T> GetChildFeatures(T parentEntity)
-        {
-            var propertyInfo = parentEntity.GetType().GetProperty("ChildFeatures");
-            if (propertyInfo != null)
-            {
-                return propertyInfo.GetValue(parentEntity) as List<T>;
-            }
-            return null;
-        }
-
         public async Task AddAsync(T entity)
         {
             await _collection.InsertOneAsync(entity);
@@ -81,7 +43,7 @@ namespace ProtaTestTrack2.Repository
             await _collection.ReplaceOneAsync(filter, entity);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(string id)
         {
             var filter = Builders<T>.Filter.Or(
                 Builders<T>.Filter.Eq("RootID", id),
@@ -92,7 +54,7 @@ namespace ProtaTestTrack2.Repository
             await _collection.DeleteOneAsync(filter);
         }
 
-        private Guid GetEntityId(T entity)
+        private string GetEntityId(T entity)
         {
             var propertyInfo = entity.GetType().GetProperty("Id")
                                 ?? entity.GetType().GetProperty("FeatureID")
@@ -104,7 +66,7 @@ namespace ProtaTestTrack2.Repository
                 throw new ArgumentException("Entity does not have an Id.");
             }
 
-            return (Guid)propertyInfo.GetValue(entity);
+            return (string)propertyInfo.GetValue(entity);
         }
     }
 }

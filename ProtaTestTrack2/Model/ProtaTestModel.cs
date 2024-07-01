@@ -5,12 +5,11 @@ public class RootFeature
 {
     [BsonId]
     [BsonRepresentation(BsonType.String)]
-    public Guid RootID { get; set; }
+    public string RootID { get; set; }
     
     [BsonElement("Features")]
     public List<Feature> Features { get; set; } = new List<Feature>();
 }
-
 public class Feature
 {
     public Feature()
@@ -21,14 +20,13 @@ public class Feature
     
     [BsonId]
     [BsonRepresentation(BsonType.String)]
-    public Guid FeatureID { get; set; }
+    public string FeatureID { get; set; }
     
     [BsonElement("Name")]
     public string Name { get; set; }
     
     [BsonElement("ParentFeatureID")]
-    public string ParentFeatureID { get; set; }
-    
+    public string? ParentFeatureID { get; set; } = null;
     [BsonElement("Cases")]
     public List<Case> Cases { get; set; }
     
@@ -46,7 +44,7 @@ public class Case
     
     [BsonId]
     [BsonRepresentation(BsonType.String)]
-    public Guid CaseID { get; set; }
+    public string CaseID { get; set; }
     
     [BsonElement("Name")]
     public string Name { get; set; }

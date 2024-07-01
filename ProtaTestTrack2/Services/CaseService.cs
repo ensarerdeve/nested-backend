@@ -19,63 +19,43 @@ namespace ProtaTestTrack2.Services
             return cases;
         }
 
-        public async Task<Case> GetCaseByIdAsync(Guid id)
+        public async Task<Case> GetCaseByIdAsync(string id)
         {
             var caseById = await _caseRepository.GetByIdAsync(id);
             return caseById;
         }
 
-        public async Task<Case> CreateCaseAsync(Guid? featureId, Case caseItem)
+        public async Task<Case> CreateCaseAsync(Case caseItem)
         {
-            if (featureId.HasValue)
+            if (caseItem.ParentFeatureID != null)
             {
-                var parentFeature = await _featureRepository.GetByIdAsync(featureId.Value);
+                var parentFeature = await _featureRepository.GetByIdAsync(caseItem.ParentFeatureID);
                 if (parentFeature == null)
                 {
-                    throw new Exception($"Feature with ID '{featureId}' not found.");
+                    throw new Exception($"Feature with ID '{caseItem.ParentFeatureID}' not found.");
                 }
-                caseItem.CaseID = Guid.NewGuid();
-                caseItem.ParentFeatureID = featureId.Value.ToString();
+                caseItem.CaseID = Guid.NewGuid().ToString();
                 parentFeature.Cases.Add(caseItem);
                 await _featureRepository.UpdateAsync(parentFeature);
                 return caseItem;
             }
             else
             {
-                caseItem.CaseID = Guid.NewGuid();
+                caseItem.CaseID = Guid.NewGuid().ToString();;
                 await _caseRepository.AddAsync(caseItem);
                 return caseItem;
             }
         }
 
-        public async Task UpdateCaseAsync(Guid id, Case caseItem)
+        public async Task UpdateCaseAsync(string id, Case caseItem)
         {
             caseItem.CaseID = id;
             await _caseRepository.UpdateAsync(caseItem);
         }
 
-        public async Task DeleteCaseAsync(Guid id)
+        public async Task DeleteCaseAsync(string id)
         {
             await _caseRepository.DeleteAsync(id);
-        }
-        public async Task AddCaseToChildFeatureAsync(Guid featureId, Guid childFeatureId, Case caseItem)
-        {
-            var parentFeature = await _featureRepository.GetByIdAsync(featureId);
-            if (parentFeature == null)
-            {
-                throw new Exception($"Parent feature with ID '{featureId}' not found.");
-            }
-
-            var childFeature = parentFeature.ChildFeatures.FirstOrDefault(cf => cf.FeatureID == childFeatureId);
-            if (childFeature == null)
-            {
-                throw new Exception($"Child feature with ID '{childFeatureId}' not found.");
-            }
-
-            caseItem.CaseID = Guid.NewGuid();
-            caseItem.ParentFeatureID = childFeatureId.ToString();
-            childFeature.Cases.Add(caseItem);
-            await _featureRepository.UpdateAsync(parentFeature);
         }
     }
 }

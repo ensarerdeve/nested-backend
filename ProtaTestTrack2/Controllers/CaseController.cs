@@ -29,7 +29,7 @@ namespace ProtaTestTrack2.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Case>> GetCase(Guid id)
+        public async Task<ActionResult<Case>> GetCase(string id)
         {
             try
             {
@@ -47,11 +47,11 @@ namespace ProtaTestTrack2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Case>> CreateCase([FromQuery] Guid? featureId, [FromBody] Case caseItem)
+        public async Task<ActionResult<Case>> CreateCase([FromBody] Case caseItem)
         {
             try
             {
-                var createdCase = await _caseService.CreateCaseAsync(featureId, caseItem);
+                var createdCase = await _caseService.CreateCaseAsync(caseItem);
                 return CreatedAtAction(nameof(GetCase), new { id = createdCase.CaseID }, createdCase);
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace ProtaTestTrack2.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCase(Guid id, [FromBody] Case caseItem)
+        public async Task<IActionResult> UpdateCase(string id, [FromBody] Case caseItem)
         {
             try
             {
@@ -79,25 +79,12 @@ namespace ProtaTestTrack2.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCase(Guid id)
+        public async Task<IActionResult> DeleteCase(string id)
         {
             try
             {
                 await _caseService.DeleteCaseAsync(id);
                 return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error: {ex.Message}");
-            }
-        }
-        [HttpPost("{featureId}/child/{childFeatureId}/case")]
-        public async Task<IActionResult> AddCaseToChildFeature(Guid featureId, Guid childFeatureId, [FromBody] Case caseItem)
-        {
-            try
-            {
-                await _caseService.AddCaseToChildFeatureAsync(featureId, childFeatureId, caseItem);
-                return CreatedAtAction(nameof(GetCase), new { id = caseItem.CaseID }, caseItem);
             }
             catch (Exception ex)
             {

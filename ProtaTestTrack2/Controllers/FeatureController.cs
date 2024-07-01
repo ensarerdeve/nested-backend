@@ -1,9 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 using ProtaTestTrack2.Services;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ProtaTestTrack2.Controllers
 {
@@ -33,7 +29,7 @@ namespace ProtaTestTrack2.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Feature>> GetFeature(Guid id)
+        public async Task<ActionResult<Feature>> GetFeature(string id)
         {
             try
             {
@@ -51,11 +47,11 @@ namespace ProtaTestTrack2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Feature>> CreateFeature([FromQuery] Guid? parentId, [FromBody] Feature feature)
+        public async Task<ActionResult<Feature>> CreateFeature([FromBody] Feature feature)
         {
             try
             {
-                var createdFeature = await _featureService.CreateFeatureAsync(parentId, feature);
+                var createdFeature = await _featureService.CreateFeatureAsync(feature);
                 return CreatedAtAction(nameof(GetFeature), new { id = createdFeature.FeatureID }, createdFeature);
             }
             catch (Exception ex)
@@ -64,7 +60,7 @@ namespace ProtaTestTrack2.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFeature(Guid id)
+        public async Task<IActionResult> DeleteFeature(string id)
         {
             try
             {

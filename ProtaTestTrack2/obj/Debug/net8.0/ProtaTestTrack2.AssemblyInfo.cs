@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProtaTestTrack2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71ee7eab04915efe48c492d619ea98d3cb79fbad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c2d31ee3844974cf730f9300192db7192910ec8")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProtaTestTrack2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProtaTestTrack2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

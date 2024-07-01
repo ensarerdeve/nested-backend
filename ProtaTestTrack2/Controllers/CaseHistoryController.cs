@@ -19,7 +19,7 @@ namespace ProtaTestTrack2.Controllers
             return Ok(caseHistories);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<CaseHistory>> GetCaseHistory(Guid id)
+        public async Task<ActionResult<CaseHistory>> GetCaseHistory(string id)
         {
             var caseHistory = await _caseHistoryRepository.GetByIdAsync(id);
             if (caseHistory == null)
@@ -59,7 +59,7 @@ namespace ProtaTestTrack2.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCaseHistory(Guid id)
+        public async Task<IActionResult> DeleteCaseHistory(string id)
         {
             try
             {
