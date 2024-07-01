@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 using ProtaTestTrack2.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProtaTestTrack2.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("Feature")]
     public class FeatureController : ControllerBase
     {
         private readonly FeatureService _featureService;
@@ -59,7 +63,6 @@ namespace ProtaTestTrack2.Controllers
                 return StatusCode(500, $"Error: {ex.Message}");
             }
         }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFeature(Guid id)
         {
@@ -73,32 +76,13 @@ namespace ProtaTestTrack2.Controllers
                 return StatusCode(500, $"Error: {ex.Message}");
             }
         }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateFeature(Guid id, [FromBody] Feature updatedFeature)
+        [HttpPut]
+        public async Task<IActionResult> UpdateFeature(Feature updatedFeature)
         {
             try
             {
-                if (id != updatedFeature.FeatureID)
-                {
-                    return BadRequest("ID mismatch between route parameter and payload.");
-                }
-
                 await _featureService.UpdateFeatureAsync(updatedFeature);
                 return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error: {ex.Message}");
-            }
-        }
-        [HttpPost("{parentId}/child")]
-        public async Task<ActionResult<Feature>> AddChildFeature(Guid parentId, [FromBody] Feature childFeature)
-        {
-            try
-            {
-                await _featureService.AddChildFeatureAsync(parentId, childFeature);
-                return CreatedAtAction(nameof(GetFeature), new { id = childFeature.FeatureID }, childFeature);
             }
             catch (Exception ex)
             {
