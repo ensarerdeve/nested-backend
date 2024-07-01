@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/ensarerdeve/Documents/VSC Projects/testtrack/ProtaTestTrack2/obj/Debug/net8.0/scopedcss/projectbundle/ProtaTestTrack2.bundle.scp.css",
+      "PackagePath": "staticwebassets/ProtaTestTrack2.bundle.scp.css"
+    },
+    {
+      "Id": "/Users/ensarerdeve/Documents/VSC Projects/testtrack/ProtaTestTrack2/wwwroot/app.css",
+      "PackagePath": "staticwebassets/app.css"
+    },
+    {
+      "Id": "/Users/ensarerdeve/Documents/VSC Projects/testtrack/ProtaTestTrack2/wwwroot/bootstrap/bootstrap.min.css",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css"
+    },
+    {
+      "Id": "/Users/ensarerdeve/Documents/VSC Projects/testtrack/ProtaTestTrack2/wwwroot/bootstrap/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/Users/ensarerdeve/Documents/VSC Projects/testtrack/ProtaTestTrack2/wwwroot/favicon.png",
+      "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.ProtaTestTrack2.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.ProtaTestTrack2.props",
+      "PackagePath": "build\\ProtaTestTrack2.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.ProtaTestTrack2.props",
+      "PackagePath": "buildMultiTargeting\\ProtaTestTrack2.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.ProtaTestTrack2.props",
+      "PackagePath": "buildTransitive\\ProtaTestTrack2.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
